@@ -9,7 +9,7 @@ from rest_framework.response import Response
 
 
 @api_view(['GET'])
-def api_home(request, *args, **kwargs):
+def api_homeget(request, *args, **kwargs):
     ''' DRF API view
     '''
     instance = Product.objects.all().order_by('?').first()
@@ -20,10 +20,11 @@ def api_home(request, *args, **kwargs):
     return Response (data)
 
 @api_view(['POST'])
-def api_home(request, *args, **kwargs):
+def api_homepost(request, *args, **kwargs):
     ''' DRF API view'''
     serializer = ProductSerializer(data=request.data)
-    if serializer.is_valid():
+    if serializer.is_valid(raise_exception=True):
         instance = serializer.save()
         print(instance)
         return Response (serializer.data)
+    return Response()
